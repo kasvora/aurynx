@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AurynX — Premium Digital Collectible</title>
+  <meta name="description" content="AurynX is a premium digital collectible designed for long-term holding—fixed supply, provenance-first, curated distribution. Built on Solana." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AurynX — Premium Digital Collectible" />
+  <meta property="og:description" content="Fixed supply. Provenance-first. Curated distribution. Built on Solana." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./aurx-logo.png" />
+
+  <!-- Professional font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    // Lightweight event tracking (console for now; replace with analytics later)
+    function trackEvent(name, meta={}) {
+      try {
+        console.log('[AurynX]', name, meta);
+      } catch (e) {}
+    }
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'],
+          },
+          colors: {
+            ax: {
+              bg0: '#061018',
+              bg1: '#061b1f',
+              accent: '#37e0c8',
+              accent2: '#1cb7c3',
+              ink: 'rgba(255,255,255,.92)',
+              muted: 'rgba(255,255,255,.72)',
+              muted2: 'rgba(255,255,255,.58)',
+              stroke: 'rgba(255,255,255,.12)',
+              card: 'rgba(255,255,255,.06)',
+            }
+          },
+          boxShadow: {
+            soft: '0 20px 70px rgba(0,0,0,.45)',
+            glow: '0 24px 70px rgba(55,224,200,.16)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Background + subtle grid */
+    body{
+      background:
+        radial-gradient(1200px 700px at 20% 20%, rgba(55,224,200,.16), transparent 60%),
+        radial-gradient(1000px 650px at 70% 35%, rgba(28,183,195,.16), transparent 55%),
+        radial-gradient(900px 520px at 50% 90%, rgba(55,224,200,.10), transparent 55%),
+        linear-gradient(180deg, #061018, #061b1f);
+      min-height: 100%;
+    }
+    .bg-grid{
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.6), transparent 65%);
+      -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.6), transparent 65%);
+      opacity: .22;
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- Favicon (uses token logo) -->
+  <link rel="icon" type="image/png" href="./aurx-logo.png" />
+  <link rel="apple-touch-icon" href="./aurx-logo.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AurynX — Premium Digital Collectible" />
+  <meta name="twitter:description" content="Fixed supply. Provenance-first. Curated distribution. Built on Solana." />
+  <meta name="twitter:image" content="./aurx-logo.png" />
+
+</head>
+
+<body class="h-full font-sans text-ax-ink">
+  <div class="absolute inset-0 bg-grid"></div>
+
+  <!-- Top nav -->
+  <header class="fixed top-0 z-50 w-full border-b border-white/10 bg-[#061018]/60 backdrop-blur-xl">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#top" class="flex items-center gap-3">
+          <img src="./aurx-logo.png" alt="AurynX logo" class="h-9 w-9 rounded-xl shadow-soft ring-1 ring-white/10" />
+          <div class="flex flex-col leading-tight">
+            <span class="text-sm font-extrabold tracking-tight">AurynX</span>
+            <span class="text-xs text-ax-muted2">Premium digital collectible</span>
+          </div>
+        </a>
+
+        <nav class="hidden items-center gap-1 md:flex">
+          <a class="rounded-lg px-3 py-2 text-sm text-ax-muted hover:bg-white/5 hover:text-white transition" href="#about">About</a>
+          <a class="rounded-lg px-3 py-2 text-sm text-ax-muted hover:bg-white/5 hover:text-white transition" href="#why">Why</a>
+          <a class="rounded-lg px-3 py-2 text-sm text-ax-muted hover:bg-white/5 hover:text-white transition" href="#token">Token</a>
+          <!-- <a class="rounded-lg px-3 py-2 text-sm text-ax-muted hover:bg-white/5 hover:text-white transition" href="#roadmap">Roadmap</a> -->
+          <a class="rounded-lg px-3 py-2 text-sm text-ax-muted hover:bg-white/5 hover:text-white transition" href="#faq">FAQ</a>
+        </nav>
+
+        <div class="hidden items-center gap-2 md:flex">
+          <a href="#"
+             id="openWaitlistNav"
+             class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+            <span>Contact</span>
+            <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5A8.48 8.48 0 0 1 21 10v.5Z"/>
+            </svg>
+          </a>
+
+          <a href="#docs"
+             class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-4 py-2 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+            <span>View Docs</span>
+            <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Mobile button -->
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10 transition" aria-expanded="false" aria-controls="mobileMenu">
+          Menu
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="hidden pb-4 md:hidden">
+        <div class="grid gap-2 pt-2">
+          <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition" href="#about">About</a>
+          <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition" href="#why">Why AurynX</a>
+          <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition" href="#token">Token</a>
+           <!-- <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition" href="#roadmap">Roadmap</a> -->
+          <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition" href="#faq">FAQ</a>
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <a class="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 transition" href="#contact">Contact</a>
+            <a class="rounded-xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-4 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition" href="#docs">View Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="relative">
+    <!-- Spacer for fixed header -->
+    <div class="h-16"></div>
+
+    <!-- Hero -->
+    <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-12 pb-10">
+      <div class="grid items-center gap-10 lg:grid-cols-2">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-ax-muted shadow-sm">
+            <span class="inline-flex h-2 w-2 rounded-full bg-ax-accent shadow-[0_0_0_6px_rgba(55,224,200,.12)]"></span>
+            Premium • Solana • Curated distribution
+          </div>
+
+          <h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            AurynX built for<br class="hidden sm:block" />
+            <span class="bg-gradient-to-r from-ax-accent to-ax-accent2 bg-clip-text text-transparent">long-term value</span>.
+          </h1>
+
+          <p class="mt-4 max-w-xl text-base leading-7 text-ax-muted sm:text-lg">
+            AurynX is positioned as a premium digital collectible—designed around scarcity and provenance,
+            with a curated distribution approach that prioritizes aligned holders over short-term speculation.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#"
+               id="openWaitlistHero"
+               class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-6 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+              Request Access
+              <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+
+            <a href="#token"
+               class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+              See Token Details
+              <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-7 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/10 text-ax-accent">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>
+                  </svg>
+                </span>
+                <div class="font-bold">Fixed supply</div>
+              </div>
+              <div class="mt-1 text-sm text-ax-muted2">Scarcity-driven thesis</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/10 text-ax-accent">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 11c0 3.5-2.5 6-6 6 0-3.5 2.5-6 6-6Z"/>
+                    <path d="M18 11c0 3.5-2.5 6-6 6 0-3.5 2.5-6 6-6Z"/>
+                    <path d="M12 5c0 3.5-2.5 6-6 6 0-3.5 2.5-6 6-6Z"/>
+                    <path d="M18 5c0 3.5-2.5 6-6 6 0-3.5 2.5-6 6-6Z"/>
+                  </svg>
+                </span>
+                <div class="font-bold">Provenance-first</div>
+              </div>
+              <div class="mt-1 text-sm text-ax-muted2">On-chain authenticity</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/10 text-ax-accent">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                <div class="font-bold">Curated</div>
+              </div>
+              <div class="mt-1 text-sm text-ax-muted2">Selective allocation</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-3xl border border-white/12 bg-white/5 p-5 shadow-soft">
+            <div class="rounded-2xl border border-white/10 bg-black/10 p-4">
+              <img src="./aurx-logo.png" alt="AurynX token logo" class="mx-auto w-[min(340px,75vw)] rounded-3xl shadow-soft" />
+            </div>
+
+            <div class="mt-5">
+              <div class="text-sm font-extrabold tracking-tight">Collectible-grade asset with disciplined issuance</div>
+              <p class="mt-2 text-sm leading-6 text-ax-muted">
+                Designed to be held, not hyped. The model emphasizes scarcity, controlled distribution,
+                and a clear separation from equity or yield-bearing products.
+              </p>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-base font-extrabold">1,000,000,000</div>
+                <div class="mt-1 text-xs text-ax-muted2">Fixed total supply</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-base font-extrabold">Curated</div>
+                <div class="mt-1 text-xs text-ax-muted2">Selective distribution</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-base font-extrabold">Solana</div>
+                <div class="mt-1 text-xs text-ax-muted2">Fast & efficient</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] bg-gradient-to-r from-ax-accent/10 to-ax-accent2/10 blur-2xl"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+  <div class="flex flex-col gap-3">
+    <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.22em] text-ax-muted2">
+      <span class="inline-flex h-2 w-2 rounded-full bg-ax-accent shadow-[0_0_0_6px_rgba(55,224,200,.12)]"></span>
+      AURYNX OVERVIEW
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">What is AurynX</h2>
+    <p class="text-ax-muted leading-7 max-w-3xl">
+      Focused on sustainable investments and growth.
+    </p>
+  </div>
+
+  <div class="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
+    <!-- Left: office visual + narrative -->
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-soft">
+      <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/10">
+        <img src="about-office.jpg" alt="AurynX office setting" class="h-[280px] w-full object-cover sm:h-[340px]" loading="lazy" />
+      </div>
+
+      <div class="mt-5 space-y-4 text-sm leading-7 text-ax-muted">
+        <p>
+          AurynX (AURX) is a digitally scarce collectible asset stewarded and funded by Kasvora Capital Management and
+          distributed through private, discretionary allocations.
+        </p>
+        <p>
+          AurynX is designed with fixed supply, controlled provenance, and long-term stewardship—rather than reliance on
+          utility promises, yield mechanisms, or public-market promotion.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: key bullets + positioning statement -->
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </span>
+        <div>
+          <div class="font-extrabold">AurynX is</div>
+          <div class="text-xs text-ax-muted2">Positioning summary</div>
+        </div>
+      </div>
+
+      <ul class="mt-5 space-y-3 text-sm leading-7 text-ax-muted">
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>A digital collectible with a fixed, non-inflationary supply</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>Privately placed and selectively allocated to sophisticated participants</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>Stewarded centrally by Kasvora Capital Management</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>Structured to be jurisdiction-neutral and regulation-aware</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>Supported by selective, private-equity–style acquisitions undertaken at the discretion of Kasvora Capital Management</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ax-accent"></span>
+          <span>Intended for long-term holding, not short-term trading</span>
+        </li>
+      </ul>
+
+      <div class="mt-6 rounded-3xl border border-white/10 bg-black/10 p-5 text-sm leading-7 text-ax-muted">
+        AurynX prioritizes scarcity, provenance, and structural discipline over growth narratives or performance expectations.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Why -->
+    <section id="why" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold tracking-tight">Why AurynX</h2>
+          <p class="mt-2 text-ax-muted leading-7 max-w-2xl">
+            A simple model: disciplined supply, credible provenance, and controlled distribution—so the asset stays premium.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20"/><path d="M2 12h20"/>
+            </svg>
+          </div>
+          <div class="mt-4 font-bold">Scarcity by design</div>
+          <p class="mt-2 text-sm text-ax-muted leading-6">Fixed supply and controlled issuance to support the collectible thesis.</p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10Z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="mt-4 font-bold">Provenance-first</div>
+          <p class="mt-2 text-sm text-ax-muted leading-6">On-chain traceability for authenticity, ownership history, and verification.</p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="mt-4 font-bold">Curated distribution</div>
+          <p class="mt-2 text-sm text-ax-muted leading-6">Selective allocation to aligned holders to reduce churn and speculation.</p>
+        </div>
+      </div>
+    </section>
+
+<!-- Social proof -->
+<section id="trust" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-extrabold tracking-tight">Verification & Transparency</h2>
+      <p class="mt-2 max-w-2xl text-ax-muted leading-7">
+        Clear, verifiable facts. No placeholders, no vague claims. Use the mint address as the single source of truth.
+      </p>
+    </div>
+
+    <div class="text-sm text-ax-muted2">
+      <span
+        class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 font-semibold text-ax-muted">
+        <span
+          class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-ax-accent border border-white/10"
+          aria-hidden="true">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
+        </span>
+        Proof-first
+      </span>
+    </div>
+  </div>
+
+  <!-- Primary trust cards -->
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    <!-- Mint -->
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="text-xs font-semibold text-ax-muted2">Official mint</div>
+      <div class="mt-2 text-base sm:text-lg font-extrabold">Mint address (Solana)</div>
+
+      <div class="mt-3 text-sm text-ax-muted leading-6">
+        Verify using the exact mint below. If anything shows a different mint, treat it as unofficial.
+      </div>
+
+      <div class="mt-4 rounded-2xl border border-white/10 bg-black/10 p-4">
+        <div class="text-xs font-semibold text-ax-muted2">Mint</div>
+        <div class="mt-2 font-mono text-sm sm:text-[13px] break-all text-ax-accent">
+          6KNFKA6Ma3YaDzXGVwZdBmBnhfahxPEVsybBzNXiSPjc
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-3 text-sm">
+        <a class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 font-semibold text-ax-accent hover:bg-white/10 hover:border-white/25 transition"
+          href="https://solscan.io/token/6KNFKA6Ma3YaDzXGVwZdBmBnhfahxPEVsybBzNXiSPjc" target="_blank" rel="noreferrer">
+          View on Solscan
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M7 17L17 7"></path>
+            <path d="M8 7h9v9"></path>
+          </svg>
+        </a>
+
+        <button type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 font-semibold text-ax-muted hover:bg-white/10 hover:border-white/25 transition"
+          onclick="navigator.clipboard?.writeText('6KNFKA6Ma3YaDzXGVwZdBmBnhfahxPEVsybBzNXiSPjc')">
+          Copy mint
+        </button>
+      </div>
+    </div>
+
+    <!-- Trading posture -->
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="text-xs font-semibold text-ax-muted2">Trading posture</div>
+      <div class="mt-2 text-lg font-extrabold">Verified links only</div>
+      <div class="mt-3 text-sm text-ax-muted leading-6">
+        Use trusted explorers and DEX analytics to confirm decimals, liquidity, and the mint before swapping.
+        Avoid “private deals” and unsolicited links.
+      </div>
+
+      <div class="mt-4 grid gap-3">
+        <div class="rounded-2xl border border-white/10 bg-black/10 p-4">
+          <div class="text-xs font-semibold text-ax-muted2">Checklist</div>
+          <ul class="mt-2 space-y-2 text-sm text-ax-muted leading-6">
+            <li class="flex gap-2">
+              <span
+                class="mt-[2px] inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ax-accent">
+                <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+              </span>
+              Confirm the mint matches exactly.
+            </li>
+            <li class="flex gap-2">
+              <span
+                class="mt-[2px] inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ax-accent">
+                <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+              </span>
+              Check token decimals (7) on the explorer.
+            </li>
+            <li class="flex gap-2">
+              <span
+                class="mt-[2px] inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ax-accent">
+                <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+              </span>
+              Verify liquidity and pool address before trading.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="text-xs font-semibold text-ax-muted2">Security</div>
+      <div class="mt-2 text-lg font-extrabold">No DMs. No keys.</div>
+      <div class="mt-3 text-sm text-ax-muted leading-6">
+        We never ask for seed phrases or private keys. Anyone claiming “support” in private messages is not official.
+      </div>
+
+      <div class="mt-4 rounded-2xl border border-white/10 bg-black/10 p-4">
+        <div class="flex items-start gap-3">
+          <span
+            class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-ax-accent"
+            aria-hidden="true">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10Z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+          </span>
+          <div>
+            <div class="font-extrabold">Anti-scam notice</div>
+            <div class="mt-1 text-sm text-ax-muted leading-6">
+              If it pressures you, rushes you, or asks for access—ignore it. Verify first.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional: enable this block only when you have real, verifiable partners -->
+  <!--
+  <div class="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <div class="text-xs font-semibold text-ax-muted2">Verified signals</div>
+        <div class="mt-1 text-lg font-extrabold">Partners & independent references</div>
+        <p class="mt-2 text-sm text-ax-muted leading-6 max-w-3xl">
+          When available, we list only verifiable references (links, published statements, or signed confirmations).
+        </p>
+      </div>
+    </div>
+  </div>
+  -->
+</section>
+
+
+    <!-- Token -->
+    <section id="token" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-extrabold tracking-tight">Token details</h2>
+      <p class="mt-2 text-ax-muted leading-7 max-w-2xl">
+        Mint is live. Verified mint address and Solscan explorer are provided below for due diligence.
+      </p>
+    </div>
+    <div class="hidden sm:block text-sm text-ax-muted2">
+      <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 font-semibold text-ax-muted">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-ax-accent border border-white/10">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </span>
+        On-chain verified
+      </span>
+    </div>
+  </div>
+
+
+  <!-- Live verification strip -->
+  <div id="verifyStrip" class="mt-5 rounded-3xl border border-white/10 bg-white/5 p-4">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-ax-accent border border-white/10">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10Z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </span>
+          Live mint
+        </span>
+
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+          <span class="text-ax-muted2">Network:</span> <span class="text-white">Solana</span>
+        </span>
+
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+          <span class="text-ax-muted2">Supply:</span> <span class="text-white">1,000,000,000</span>
+        </span>
+
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+          <span class="text-ax-muted2">Mint:</span>
+          <span class="font-mono text-white/90">GxLK…7YDw</span>
+          <button id="copyMintInline" type="button" class="inline-flex items-center justify-center rounded-lg border border-white/10 bg-black/10 px-2 py-1 text-[11px] font-semibold text-white/90 hover:bg-white/10 transition">
+            Copy
+          </button>
+        </span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <a id="openSolscanInline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer"
+           class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-4 py-2 text-xs font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+          Open Solscan
+          <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+          </svg>
+        </a>
+
+        <button id="openWaitlistBtnTop" type="button"
+          class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+          Join waitlist
+          <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="inlineCopyToast" class="mt-3 hidden text-xs text-ax-muted2">Copied to clipboard.</div>
+  </div>
+
+  <!-- Centered verified mint card -->
+  <div class="mt-6 flex justify-center">
+    <div class="w-full max-w-4xl rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div class="min-w-0">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10Z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </span>
+            <div>
+              <div class="text-sm font-extrabold tracking-tight">Verified mint</div>
+              <div class="text-xs text-ax-muted2">Solana token mint address</div>
+            </div>
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-white/10 bg-black/10 p-4">
+            <div class="text-xs font-semibold text-ax-muted2">Mint address</div>
+            <div class="mt-2 break-all font-mono text-sm text-white/90">GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw</div>
+            <div class="mt-3 text-xs text-ax-muted2">
+              Verify on Solscan:
+              <a class="font-mono text-ax-accent hover:underline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer">solscan.io</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex w-full flex-col gap-2 sm:w-auto sm:min-w-[220px] sm:items-stretch">
+          <button id="copyMintBtn" type="button"
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+            Copy
+            <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </button>
+
+          <a href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer"
+            class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-4 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+            Open Solscan
+            <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+            </svg>
+          </a>
+
+          <div id="copyToast" class="hidden text-center text-xs text-ax-muted2">Copied to clipboard.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parameter cards -->
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+            <path d="M3.3 7 12 12l8.7-5"/>
+            <path d="M12 22V12"/>
+          </svg>
+        </span>
+        <div>
+          <div class="font-extrabold">Core parameters</div>
+          <div class="text-xs text-ax-muted2">Verified on-chain</div>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-2 text-sm text-ax-muted">
+        <div><span class="font-semibold text-white">Network:</span> Solana</div>
+        <div><span class="font-semibold text-white">Asset type:</span> Digital collectible token</div>
+        <div><span class="font-semibold text-white">Total supply:</span> 1,000,000,000 (fixed)</div>
+        <div><span class="font-semibold text-white">Mint address:</span> <span class="font-mono break-all">GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw</span></div>
+        <div><span class="font-semibold text-white">Explorer:</span> <a class="font-mono text-ax-accent hover:underline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer">Solscan</a></div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 21v-7"/><path d="M4 10V3"/>
+            <path d="M12 21v-9"/><path d="M12 8V3"/>
+            <path d="M20 21v-5"/><path d="M20 12V3"/>
+            <path d="M2 14h4"/><path d="M10 8h4"/><path d="M18 16h4"/>
+          </svg>
+        </span>
+        <div>
+          <div class="font-extrabold">Controls &amp; policy</div>
+          <div class="text-xs text-ax-muted2">Institution-ready setup</div>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-2 text-sm text-ax-muted">
+        <div><span class="font-semibold text-white">Treasury:</span> Multisig (2/3 or 3/5)</div>
+        <div><span class="font-semibold text-white">Issuance:</span> Curated tranches</div>
+        <div><span class="font-semibold text-white">Transfers:</span> Optional lock-up / whitelist</div>
+        <div><span class="font-semibold text-white">Disclosures:</span> Not equity, not yield-bearing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to verify / access -->
+  <div id="howto" class="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <div class="text-sm font-extrabold tracking-tight">How to verify</div>
+        <div class="mt-1 text-sm text-ax-muted">Three steps for fast due diligence.</div>
+      </div>
+      <div class="text-xs text-ax-muted2">Keep this section factual and simple.</div>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-3">
+      <div class="rounded-3xl border border-white/10 bg-black/10 p-5">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-ax-accent font-extrabold">1</span>
+          <div class="font-bold">Verify mint</div>
+        </div>
+        <p class="mt-3 text-sm text-ax-muted leading-6">
+          Confirm the mint on Solscan and review token details.
+        </p>
+        <a class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-ax-accent hover:underline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer">
+          Open Solscan
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-black/10 p-5">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-ax-accent font-extrabold">2</span>
+          <div class="font-bold">Add to wallet</div>
+        </div>
+        <p class="mt-3 text-sm text-ax-muted leading-6">
+          Add the mint to your Solana wallet (e.g., Phantom) to track holdings.
+        </p>
+        <div class="mt-3 text-xs text-ax-muted2">Mint: <span class="font-mono">GxLK…7YDw</span></div>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-black/10 p-5">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-ax-accent font-extrabold">3</span>
+          <div class="font-bold">Access & liquidity</div>
+        </div>
+        <p class="mt-3 text-sm text-ax-muted leading-6">
+          If when secondary markets are enabled, confirm official links from this page before interacting.
+        </p>
+        <div class="mt-3 text-xs text-ax-muted2">DEX links: <span class="font-semibold text-white/80">TBA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Roadmap -->
+    
+<!-- Tokenomics (editable) -->
+<section id="tokenomics" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-extrabold tracking-tight">Tokenomics</h2>
+      <p class="mt-2 text-ax-muted leading-7 max-w-2xl">
+        Suggested allocation template. Update these percentages to match your official distribution policy.
+      </p>
+    </div>
+    <div class="text-sm text-ax-muted2">
+      <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 font-semibold text-ax-muted">
+        Editable
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="flex items-center justify-between">
+        <div class="font-extrabold">Allocation breakdown</div>
+        <div class="text-xs text-ax-muted2">Template</div>
+      </div>
+
+      <div class="mt-5 space-y-4 text-sm">
+        <div>
+          <div class="flex items-center justify-between">
+            <div class="font-semibold text-white/90">Community / Collectors</div>
+            <div class="font-mono text-ax-muted">40%</div>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-black/20 overflow-hidden border border-white/10">
+            <div class="h-full w-[40%] bg-gradient-to-r from-ax-accent to-ax-accent2"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <div class="font-semibold text-white/90">Treasury</div>
+            <div class="font-mono text-ax-muted">35%</div>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-black/20 overflow-hidden border border-white/10">
+            <div class="h-full w-[35%] bg-white/20"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <div class="font-semibold text-white/90">Liquidity</div>
+            <div class="font-mono text-ax-muted">20%</div>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-black/20 overflow-hidden border border-white/10">
+            <div class="h-full w-[20%] bg-white/15"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <div class="font-semibold text-white/90">Operations</div>
+            <div class="font-mono text-ax-muted">5%</div>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-black/20 overflow-hidden border border-white/10">
+            <div class="h-full w-[5%] bg-white/10"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 text-xs text-ax-muted2 leading-6">
+        Note: Update these numbers to your official policy. Keep disclosures consistent: not equity, not yield-bearing.
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div class="font-extrabold">Distribution policy (short)</div>
+      <ul class="mt-4 space-y-2 text-sm text-ax-muted">
+        <li class="flex gap-2"><span class="text-ax-accent">•</span> Curated allocation to aligned holders</li>
+        <li class="flex gap-2"><span class="text-ax-accent">•</span> Optional lock-up / whitelist (if applied)</li>
+        <li class="flex gap-2"><span class="text-ax-accent">•</span> Treasury governed via multisig</li>
+        <li class="flex gap-2"><span class="text-ax-accent">•</span> Official links published on this page</li>
+      </ul>
+
+      <div class="mt-6 rounded-3xl border border-white/10 bg-black/10 p-5">
+        <div class="text-xs font-semibold text-ax-muted2">Mint address</div>
+        <div class="mt-2 break-all font-mono text-sm text-white/90">GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw</div>
+        <a class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-ax-accent hover:underline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer">
+          Verify on Solscan
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+ <!--
+<section id="roadmap" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold tracking-tight">Roadmap</h2>
+          <p class="mt-2 text-ax-muted leading-7 max-w-2xl">
+            A realistic execution path from narrative to institutional readiness.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l10 6-10 6L2 8l10-6Z"/><path d="M2 14l10 6 10-6"/>
+              </svg>
+            </span>
+            <div class="font-extrabold">Phase 1 — Foundation</div>
+          </div>
+          <p class="mt-3 text-sm text-ax-muted leading-6">
+            Finalize brand, domain, and investor kit. Create the token and establish treasury controls.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-6"/>
+              </svg>
+            </span>
+            <div class="font-extrabold">Phase 2 — Mechanics</div>
+          </div>
+          <p class="mt-3 text-sm text-ax-muted leading-6">
+            Define tranches, eligibility, transfer policy, and onboarding workflow (KYC/whitelist if needed).
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </span>
+            <div class="font-extrabold">Phase 3 — Outreach</div>
+          </div>
+          <p class="mt-3 text-sm text-ax-muted leading-6">
+            Curated distribution to strategic participants with consistent updates and governance reporting.
+          </p>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Docs -->
+    <section id="docs" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-extrabold tracking-tight">Docs</h2>
+          <p class="mt-3 text-ax-muted leading-7">
+            Add your official links here (whitepaper, deck, GitBook/Notion). This makes AurynX instantly more credible.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <div class="text-sm font-bold">Whitepaper</div>
+              <div class="mt-1 text-xs text-ax-muted2 font-mono">https://aurynx.capital/whitepaper.pdf</div>
+            </div>
+            <div>
+              <div class="text-sm font-bold">Deck</div>
+              <div class="mt-1 text-xs text-ax-muted2 font-mono">https://aurynx.capital/deck.pdf</div>
+            </div>
+            <div>
+              <div class="text-sm font-bold">Website</div>
+              <div class="mt-1 text-xs text-ax-muted2 font-mono">https://aurynx.capital</div>
+            </div>
+            <div>
+              <div class="text-sm font-bold">Contact</div>
+              <div class="mt-1 text-xs text-ax-muted2 font-mono">support@aurynx.capital</div>
+            </div>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-ax-accent border border-white/10">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10Z"/>
+                </svg>
+              </span>
+              Confidential distribution (optional)
+            </span>
+
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-ax-muted">
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-ax-accent border border-white/10">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </span>
+              Institution-ready packaging
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+      <div>
+        <h2 class="text-2xl font-extrabold tracking-tight">FAQ</h2>
+        <p class="mt-2 text-ax-muted leading-7 max-w-2xl">
+          Short, compliance-aware answers aligned with the premium collectible positioning.
+        </p>
+      </div>
+
+      <div class="mt-6 space-y-3">
+        <details class="group rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="font-bold">Is AurynX equity in a company?</span>
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent transition group-open:rotate-45">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14"/><path d="M5 12h14"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-sm leading-6 text-ax-muted">
+            No. AurynX is positioned as a digital collectible and does not represent ownership, dividends, or profit claims.
+          </p>
+        </details>
+
+        <details class="group rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="font-bold">Does AurynX provide yield or guaranteed returns?</span>
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent transition group-open:rotate-45">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14"/><path d="M5 12h14"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-sm leading-6 text-ax-muted">
+            No. It is not a yield-bearing product and there are no guaranteed returns. Any value is based on collectible market dynamics.
+          </p>
+        </details>
+
+        <details class="group rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="font-bold">Why curated distribution?</span>
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent transition group-open:rotate-45">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14"/><path d="M5 12h14"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-sm leading-6 text-ax-muted">
+            To keep holders aligned with the long-term collectible thesis and reduce short-term churn or speculative behavior.
+          </p>
+        </details>
+
+        <details class="group rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="font-bold">Is secondary trading allowed?</span>
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-black/10 text-ax-accent transition group-open:rotate-45">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14"/><path d="M5 12h14"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-sm leading-6 text-ax-muted">
+            This depends on the final transfer policy. If restrictions are applied (lock-up/whitelist), they will be documented clearly.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-extrabold tracking-tight">Contact</h2>
+          <p class="mt-3 text-ax-muted leading-7">
+            Verified links and official contact details are listed below. This form uses email (no server required).
+          </p>
+
+          <div class="mt-5 rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div class="text-sm font-bold">Direct</div>
+            <div class="mt-3 space-y-2 text-sm text-ax-muted">
+              <div><span class="font-semibold text-white">Email:</span> <span class="font-mono">support@aurynx.capital</span></div>
+              <div><span class="font-semibold text-white">Telegram:</span> <span class="font-mono">t.me/aurynxcapital</span></div>
+              <div><span class="font-semibold text-white">X:</span> <span class="font-mono">x.com/aurynxcapital</span></div>
+            </div>
+          </div>
+
+          <div class="mt-5 text-xs text-ax-muted2 leading-6">
+            Disclosure: AurynX is presented for discussion purposes only. No guarantees of liquidity, future value, or returns.
+            Always consult qualified legal/financial advisors where applicable.
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+          <form id="contactForm" class="space-y-4">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class="text-sm font-semibold text-ax-muted2">Full name</label>
+                <input id="name" required placeholder="Your name"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-ax-muted2">Email</label>
+                <input id="email" type="email" required placeholder="you@domain.com"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+              </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class="text-sm font-semibold text-ax-muted2">Interest</label>
+                <select id="interest" required
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]">
+                  <option value="" selected disabled>Select one</option>
+                  <option>Collector / Holder</option>
+                  <option>Strategic Partner</option>
+                  <option>Market Maker / Liquidity</option>
+                  <option>Press / Media</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-ax-muted2">Jurisdiction (optional)</label>
+                <input id="country" placeholder="Country / Region"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+              </div>
+            </div>
+
+            <div>
+              <label class="text-sm font-semibold text-ax-muted2">Message</label>
+              <textarea id="message" rows="5" required placeholder="Share what you're looking for"
+                class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <button type="submit"
+                class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-6 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+                Send message
+                <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/>
+                </svg>
+              </button>
+
+              <button type="button" id="mailtoBtn"
+                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+                Email directly
+                <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/>
+                </svg>
+              </button>
+
+              <span id="formStatus" class="text-xs text-ax-muted2"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-10">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex items-center gap-3">
+            <img src="./aurx-logo.png" alt="AurynX logo" class="h-9 w-9 rounded-xl ring-1 ring-white/10" />
+            <div>
+              <div class="font-extrabold tracking-tight">AurynX</div>
+              <div class="text-xs text-ax-muted2">© <span id="year"></span> All rights reserved.</div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <a href="#docs" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition">Docs</a>
+            <a href="#token" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition">Token</a>
+            <a href="#contact" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-ax-muted hover:text-white hover:bg-white/10 transition">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+<!-- Waitlist modal -->
+<div id="waitlistModal" class="fixed inset-0 z-[60] hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+  <div class="relative mx-auto mt-24 w-[min(92vw,520px)]">
+    <div class="rounded-3xl border border-white/10 bg-[#061018]/80 backdrop-blur-xl p-6 shadow-soft">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="text-lg font-extrabold tracking-tight">Join the AurynX waitlist</div>
+          <div class="mt-1 text-sm text-ax-muted">Get updates and access instructions from the official channel.</div>
+        </div>
+        <button id="closeWaitlist" type="button" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10 transition" aria-label="Close">
+          ✕
+        </button>
+      </div>
+
+      <form id="waitlistForm" class="mt-5 space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="text-sm font-semibold text-ax-muted2">Name</label>
+            <input id="wlName" required placeholder="Your name"
+              class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+          </div>
+          <div>
+            <label class="text-sm font-semibold text-ax-muted2">Email</label>
+            <input id="wlEmail" type="email" required placeholder="you@domain.com"
+              class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm font-semibold text-ax-muted2">Telegram (optional)</label>
+          <input id="wlTelegram" placeholder="@yourhandle"
+            class="mt-2 w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-4 focus:ring-[rgba(55,224,200,.12)] focus:border-[rgba(55,224,200,.35)]" />
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-black/10 p-4">
+          <div class="text-xs font-semibold text-ax-muted2">Verified mint</div>
+          <div class="mt-2 break-all font-mono text-sm text-white/90">GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw</div>
+          <a class="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-ax-accent hover:underline" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer">
+            Open Solscan
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit"
+            class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-6 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+            Submit
+            <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/>
+            </svg>
+          </button>
+
+          <button type="button" id="wlMailtoBtn"
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-white/10 hover:border-white/20 transition active:translate-y-[1px]">
+            Use email client
+            <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/>
+            </svg>
+          </button>
+
+          <span id="wlStatus" class="text-xs text-ax-muted2"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky CTA (desktop + mobile) -->
+<div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2">
+  <button id="openWaitlistSticky" type="button"
+    class="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-ax-accent to-ax-accent2 px-5 py-3 text-sm font-extrabold text-[#041015] shadow-glow ring-1 ring-white/10 hover:brightness-[1.03] transition active:translate-y-[1px]">
+    Request access
+    <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </svg>
+  </button>
+
+  <a id="openSolscanSticky" href="https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw" target="_blank" rel="noreferrer"
+    class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-[#061018]/60 backdrop-blur-xl px-5 py-3 text-sm font-semibold text-white shadow-soft hover:bg-white/10 hover:border-white/20 transition">
+    Open Solscan
+    <svg class="h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+    </svg>
+  </a>
+</div>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
+        menuBtn.setAttribute('aria-expanded', String(isHidden));
+      });
+    }
+
+    // Smooth scroll with offset for fixed header
+    const headerOffset = 70;
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#') return;
+        const el = document.querySelector(id);
+        if (!el) return;
+
+        e.preventDefault();
+        const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+
+        // close mobile menu if open
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          menuBtn && menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        history.pushState(null, '', id);
+      });
+    });
+
+    // Contact form: mailto workflow
+    const toEmail = 'partners@yourdomain.com'; // TODO: replace with official email
+    function buildMailto() {
+      const name = (document.getElementById('name')?.value || '').trim();
+      const email = (document.getElementById('email')?.value || '').trim();
+      const interest = (document.getElementById('interest')?.value || '').trim();
+      const country = (document.getElementById('country')?.value || '').trim();
+      const message = (document.getElementById('message')?.value || '').trim();
+
+      const subject = encodeURIComponent(`AurynX Inquiry — ${interest || 'Request'}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Interest: ${interest}\n` +
+        (country ? `Jurisdiction: ${country}\n` : '') +
+        `\nMessage:\n${message}\n`
+      );
+      return `mailto:${toEmail}?subject=${subject}&body=${body}`;
+    }
+
+    const mailtoBtn = document.getElementById('mailtoBtn');
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+
+    if (mailtoBtn) {
+      mailtoBtn.addEventListener('click', () => window.location.href = buildMailto());
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          statusEl && (statusEl.textContent = 'Please complete the required fields.');
+          return;
+        }
+        statusEl && (statusEl.textContent = 'Opening your email client');
+        window.location.href = buildMailto();
+      });
+    }
+
+    
+    // Waitlist modal controls
+    const waitlistModal = document.getElementById('waitlistModal');
+    const closeWaitlist = document.getElementById('closeWaitlist');
+    const openWaitlistSticky = document.getElementById('openWaitlistSticky');
+    const openWaitlistBtnTop = document.getElementById('openWaitlistBtnTop');
+    const wlStatus = document.getElementById('wlStatus');
+
+    function openWaitlist() {
+      if (!waitlistModal) return;
+      waitlistModal.classList.remove('hidden');
+      trackEvent('waitlist_open');
+      setTimeout(() => document.getElementById('wlName')?.focus(), 50);
+    }
+    function closeWaitlistModal() {
+      if (!waitlistModal) return;
+      waitlistModal.classList.add('hidden');
+      trackEvent('waitlist_close');
+    }
+
+    [openWaitlistSticky, openWaitlistBtnTop, document.getElementById('openWaitlistHero'), document.getElementById('openWaitlistNav')].forEach(btn => btn && btn.addEventListener('click', (e)=>{ e.preventDefault(); openWaitlist(); }));
+    closeWaitlist && closeWaitlist.addEventListener('click', closeWaitlistModal);
+    waitlistModal && waitlistModal.addEventListener('click', (e) => {
+      if (e.target === waitlistModal.firstElementChild) closeWaitlistModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && waitlistModal && !waitlistModal.classList.contains('hidden')) closeWaitlistModal();
+    });
+
+    // Inline mint copy in verify strip
+    const copyMintInline = document.getElementById('copyMintInline');
+    const inlineCopyToast = document.getElementById('inlineCopyToast');
+    if (copyMintInline) {
+      copyMintInline.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText("GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw");
+          inlineCopyToast && inlineCopyToast.classList.remove('hidden');
+          inlineCopyToast && (inlineCopyToast.textContent = 'Copied to clipboard.');
+          trackEvent('mint_copy_inline');
+          setTimeout(() => inlineCopyToast && inlineCopyToast.classList.add('hidden'), 1800);
+        } catch (e) {
+          trackEvent('mint_copy_inline_fail');
+        }
+      });
+    }
+
+    // Waitlist form (mailto workflow)
+    const waitlistForm = document.getElementById('waitlistForm');
+    const wlMailtoBtn = document.getElementById('wlMailtoBtn');
+    const toEmailWaitlist = 'partners@yourdomain.com'; // TODO: replace with official email
+
+    function waitlistMailto() {
+      const n = (document.getElementById('wlName')?.value || '').trim();
+      const em = (document.getElementById('wlEmail')?.value || '').trim();
+      const tg = (document.getElementById('wlTelegram')?.value || '').trim();
+      const subject = encodeURIComponent('AurynX Waitlist — Request Access');
+      const body = encodeURIComponent(
+        `Name: ${n}\n` +
+        `Email: ${em}\n` +
+        (tg ? `Telegram: ${tg}\n` : '') +
+        `\nMint: GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw\n` +
+        `Solscan: https://solscan.io/token/GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw\n`
+      );
+      return `mailto:${toEmailWaitlist}?subject=${subject}&body=${body}`;
+    }
+
+    wlMailtoBtn && wlMailtoBtn.addEventListener('click', () => {
+      trackEvent('waitlist_mailto_click');
+      window.location.href = waitlistMailto();
+    });
+
+    waitlistForm && waitlistForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!waitlistForm.checkValidity()) {
+        wlStatus && (wlStatus.textContent = 'Please complete required fields.');
+        trackEvent('waitlist_submit_invalid');
+        return;
+      }
+      wlStatus && (wlStatus.textContent = 'Opening your email client...');
+      trackEvent('waitlist_submit');
+      window.location.href = waitlistMailto();
+    });
+
+    // Track key CTA clicks
+    document.getElementById('openSolscanInline')?.addEventListener('click', () => trackEvent('solscan_open_inline'));
+    document.getElementById('openSolscanSticky')?.addEventListener('click', () => trackEvent('solscan_open_sticky'));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Copy mint to clipboard (professional UX)
+    const copyBtn = document.getElementById('copyMintBtn');
+    const toast = document.getElementById('copyToast');
+    const mintValue = "GxLKfgEYq1AFVy1NyaDn3qZcJP737Mjz1zCf4R7r7YDw";
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(mintValue);
+          if (toast) {
+            toast.classList.remove('hidden');
+            toast.textContent = 'Copied to clipboard.';
+            setTimeout(() => toast.classList.add('hidden'), 2000);
+          }
+        } catch (e) {
+          // Fallback
+          const t = document.createElement('textarea');
+          t.value = mintValue;
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand('copy');
+          document.body.removeChild(t);
+          if (toast) {
+            toast.classList.remove('hidden');
+            toast.textContent = 'Copied (fallback).';
+            setTimeout(() => toast.classList.add('hidden'), 2000);
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>
