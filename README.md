@@ -1,6 +1,6 @@
 # AurynX — Website (Private Placement / Digital Collectible)
 
-Official website for **AurynX**, a Solana-based **digital collectible** project owned and managed by **Kasvora Capital Management**. :contentReference[oaicite:0]{index=0}
+Official website for **AurynX**, a Solana-based **digital collectible** project owned and managed by **Kasvora Capital Management**.
 
 Live site: https://aurynx.capital/
 
